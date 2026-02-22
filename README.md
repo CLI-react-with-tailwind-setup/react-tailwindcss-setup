@@ -173,6 +173,11 @@ export default defineConfig({
 
 ## 🧑‍💻 Author
 
+Vishal Kr  
+
+- GitHub: https://github.com/vishu9334  
+- LinkedIn: https://www.linkedin.com/in/vishal-kumar-46b05b258/
+
 Built to solve a real problem — no more repetitive setup every time you start a React project.
 
 ---

@@ -1,6 +1,6 @@
 {
   "name": "react-tailwind-v1",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "description": "A CLI tool to scaffold Vite + React projects with Tailwind CSS instantly.",
   "bin": {

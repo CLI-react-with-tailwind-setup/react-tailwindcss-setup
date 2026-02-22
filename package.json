@@ -1,15 +1,33 @@
 {
   "name": "react-tailwind-v1",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
+  "description": "A CLI tool to scaffold Vite + React projects with Tailwind CSS instantly.",
   "bin": {
     "react-tailwind-v1": "./bin/vk-init"
   },
-  "scripts": {},
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "CLI tool to scaffold React projects",
+  "keywords": [
+    "cli",
+    "react",
+    "tailwind",
+    "vite",
+    "scaffold",
+    "react-cli",
+    "tailwind-cli"
+  ],
+  "author": {
+    "name": "Vishal Kumar",
+    "url": "https://www.linkedin.com/in/vishal-kumar-46b05b258"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup/issues"
+  },
+  "homepage": "https://github.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup#readme",
   "dependencies": {
     "chalk": "^5.6.2",
     "ora": "^9.3.0"

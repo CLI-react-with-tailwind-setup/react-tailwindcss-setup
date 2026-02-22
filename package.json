@@ -1,10 +1,10 @@
 {
-  "name": "create-react-tailwind",
+  "name": "create-r-tailwind",
   "version": "1.0.0",
   "type": "module",
-  "description": "CLI tool to scaffold Vite + React + Tailwind projects. Run with: npx create-react-tailwind my-app",
+  "description": "CLI tool to scaffold Vite + React + Tailwind projects. Run with: npx create-r-tailwind my-app",
   "bin": {
-    "create-react-tailwind": "./bin/vk-init"
+    "create-r-tailwind": "./bin/vk-init"
   },
   "keywords": [
     "cli",

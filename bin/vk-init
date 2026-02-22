@@ -93,7 +93,7 @@ function runCommand(command, args) {
 
     const child = spawn(cmd, args, {
       stdio: "inherit",
-      env: { ...process.env, CI: "true" },
+      env: process.env,
       detached: process.platform !== "win32"
     });
 
@@ -165,9 +165,11 @@ async function main() {
 
   } catch (err) {
     console.log(chalk.red("\n❌ Setup failed or interrupted."));
+  if (err?.message) {
+    console.log(chalk.red(err.message));
   }
 }
-
+}
 // ---------------- CONFIGURE VITE ----------------
 
 function configureVite() {

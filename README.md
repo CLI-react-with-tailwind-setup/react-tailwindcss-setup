@@ -30,7 +30,7 @@ Every time you start a new frontend project the drill is the same:
 
 It's tedious, repetitive, and easy to mess up.
 
-**`create-crt` does all of this in a single command.** It creates the Vite + React app, installs Tailwind CSS, wires up the config files, and even starts the dev server — so you go from zero to coding in seconds.
+**`create-react-crt` does all of this in a single command.** It creates the Vite + React app, installs Tailwind CSS, wires up the config files, and even starts the dev server — so you go from zero to coding in seconds.
 
 ---
 
@@ -52,7 +52,7 @@ It's tedious, repetitive, and easy to mess up.
 ### Global install (recommended)
 
 ```bash
-npm install -g create-crt
+npm install -g create-react-crt
 ```
 
 Once installed globally, you can use the `create-crt` command from anywhere.
@@ -60,7 +60,7 @@ Once installed globally, you can use the `create-crt` command from anywhere.
 ### Run without installing (via npx)
 
 ```bash
-npx create-crt my-app
+npx create-react-crt my-app
 ```
 
 ---
@@ -70,7 +70,7 @@ npx create-crt my-app
 ### Basic — create a new project
 
 ```bash
-create-crt my-app
+create-react-crt my-app
 ```
 
 This will:
@@ -83,7 +83,7 @@ This will:
 ### Scaffold in the current directory
 
 ```bash
-create-crt .
+create-react-crt .
 ```
 
 Use `.` to set up the project in your current directory instead of creating a new folder.
@@ -92,10 +92,10 @@ Use `.` to set up the project in your current directory instead of creating a ne
 
 ```bash
 # Using = syntax
-create-crt my-app --tailwind-version=3
+create-react-crt my-app --tailwind-version=3
 
 # Using space syntax
-create-crt my-app --tailwind-version 3.4.17
+create-react-crt my-app --tailwind-version 3.4.17
 ```
 
 If you don't pass `--tailwind-version`, the CLI will prompt you to enter one. Press **Enter** to use the default (latest v4).
@@ -105,7 +105,7 @@ If you don't pass `--tailwind-version`, the CLI will prompt you to enter one. Pr
 ## 🛠️ Example Walkthrough
 
 ```
-$ create-crt my-portfolio
+$ create-react-crt my-portfolio
 
 Tailwind version? (press Enter for latest v4): 
 

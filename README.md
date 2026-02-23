@@ -3,17 +3,17 @@
 ![create-crt](image/img.png)
 ## CLI Preview
 
-![Preview 1](https://drive.google.com/uc?export=view&id=1QAa5WsZyRNEktkzDeXn2UVeyuJnQI4yK)
+![Preview 1](image/sample1.png)
 
-![Preview 2](https://drive.google.com/uc?export=view&id=1c_5addMp38e-4Konff168HZPdeg9TBK2)
+![Preview 2](image/sample2.png)
 
-![Preview 3](https://drive.google.com/uc?export=view&id=1hBpXNcoHVshfGut0VriusWtPNncq7LWq)
+![Preview 3](image/sample3.png)
 
-![Preview 4](https://drive.google.com/uc?export=view&id=1xoQ36Zel4vzOKb0wd4Q1gBoERJIa0pBW)
+![Preview 4](image/sample4.png)
 
-![Preview 5](https://drive.google.com/uc?export=view&id=10oYoGbhxzUM1ZzZiRF80kK2M5yCRNSPt)
+![Preview 5](image/sample5.png)
 
-![Preview 6](https://drive.google.com/uc?export=view&id=1190Qs8zeQhyvusO1VeSW3hizk3qIQ4jc)
+![Preview 6](image/sample6.png)
 
 > **One command to scaffold a production-ready React + Tailwind CSS project — no manual config needed.**
 

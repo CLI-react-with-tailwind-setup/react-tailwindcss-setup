@@ -1,19 +1,19 @@
 # create-crt
 
-![create-crt](image/img.png)
+![create-crt](https://raw.githubusercontent.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup/main/image/img.png)
 ## CLI Preview
 
-![Preview 1](https://drive.google.com/uc?export=view&id=1QAa5WsZyRNEktkzDeXn2UVeyuJnQI4yK)
+![Preview 1](https://raw.githubusercontent.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup/main/image/sample1.png)
 
-![Preview 2](https://drive.google.com/uc?export=view&id=1c_5addMp38e-4Konff168HZPdeg9TBK2)
+![Preview 2](https://raw.githubusercontent.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup/main/image/sample2.png)
 
-![Preview 3](https://drive.google.com/uc?export=view&id=1hBpXNcoHVshfGut0VriusWtPNncq7LWq)
+![Preview 3](https://raw.githubusercontent.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup/main/image/sample3.png)
 
-![Preview 4](https://drive.google.com/uc?export=view&id=1xoQ36Zel4vzOKb0wd4Q1gBoERJIa0pBW)
+![Preview 4](https://raw.githubusercontent.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup/main/image/sample4.png)
 
-![Preview 5](https://drive.google.com/uc?export=view&id=10oYoGbhxzUM1ZzZiRF80kK2M5yCRNSPt)
+![Preview 5](https://raw.githubusercontent.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup/main/image/sample5.png)
 
-![Preview 6](https://drive.google.com/uc?export=view&id=1190Qs8zeQhyvusO1VeSW3hizk3qIQ4jc)
+![Preview 6](https://raw.githubusercontent.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup/main/image/sample6.png)
 
 > **One command to scaffold a production-ready React + Tailwind CSS project — no manual config needed.**
 
@@ -30,7 +30,7 @@ Every time you start a new frontend project the drill is the same:
 
 It's tedious, repetitive, and easy to mess up.
 
-**`create-crt` does all of this in a single command.** It creates the Vite + React app, installs Tailwind CSS, wires up the config files, and even starts the dev server — so you go from zero to coding in seconds.
+**`create-react-crt` does all of this in a single command.** It creates the Vite + React app, installs Tailwind CSS, wires up the config files, and even starts the dev server — so you go from zero to coding in seconds.
 
 ---
 
@@ -52,7 +52,7 @@ It's tedious, repetitive, and easy to mess up.
 ### Global install (recommended)
 
 ```bash
-npm install -g create-crt
+npm install -g create-react-crt
 ```
 
 Once installed globally, you can use the `create-crt` command from anywhere.
@@ -60,7 +60,7 @@ Once installed globally, you can use the `create-crt` command from anywhere.
 ### Run without installing (via npx)
 
 ```bash
-npx create-crt my-app
+npx create-react-crt my-app
 ```
 
 ---
@@ -70,7 +70,7 @@ npx create-crt my-app
 ### Basic — create a new project
 
 ```bash
-create-crt my-app
+create-react-crt my-app
 ```
 
 This will:
@@ -83,7 +83,7 @@ This will:
 ### Scaffold in the current directory
 
 ```bash
-create-crt .
+create-react-crt .
 ```
 
 Use `.` to set up the project in your current directory instead of creating a new folder.
@@ -92,10 +92,10 @@ Use `.` to set up the project in your current directory instead of creating a ne
 
 ```bash
 # Using = syntax
-create-crt my-app --tailwind-version=3
+create-react-crt my-app --tailwind-version=3
 
 # Using space syntax
-create-crt my-app --tailwind-version 3.4.17
+create-react-crt my-app --tailwind-version 3.4.17
 ```
 
 If you don't pass `--tailwind-version`, the CLI will prompt you to enter one. Press **Enter** to use the default (latest v4).
@@ -105,7 +105,7 @@ If you don't pass `--tailwind-version`, the CLI will prompt you to enter one. Pr
 ## 🛠️ Example Walkthrough
 
 ```
-$ create-crt my-portfolio
+$ create-react-crt my-portfolio
 
 Tailwind version? (press Enter for latest v4): 
 

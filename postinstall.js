@@ -5,11 +5,11 @@ console.log(`
 
 Do NOT install it using:
 
-npm install create-crt
+npm install create-react-crt
 
 Instead run:
 
-npx create-crt my-app
+npx create-react-crt my-app
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 `);

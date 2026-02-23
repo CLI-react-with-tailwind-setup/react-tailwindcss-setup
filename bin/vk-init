@@ -6,10 +6,82 @@ import fs from "fs";
 import readline from "readline";
 import ora from "ora";
 
+// ---------------- FRAMEWORKS DATA ----------------
+
+const FRAMEWORKS = [
+  {
+    name: "React",
+    color: chalk.cyan,
+    variants: [
+      { name: "JavaScript", template: "react" },
+      { name: "TypeScript", template: "react-ts" },
+      { name: "JavaScript + SWC", template: "react-swc" },
+      { name: "TypeScript + SWC", template: "react-swc-ts" },
+    ],
+  },
+  {
+    name: "Vue",
+    color: chalk.green,
+    variants: [
+      { name: "JavaScript", template: "vue" },
+      { name: "TypeScript", template: "vue-ts" },
+    ],
+  },
+  {
+    name: "Svelte",
+    color: chalk.red,
+    variants: [
+      { name: "JavaScript", template: "svelte" },
+      { name: "TypeScript", template: "svelte-ts" },
+    ],
+  },
+  {
+    name: "Preact",
+    color: chalk.magenta,
+    variants: [
+      { name: "JavaScript", template: "preact" },
+      { name: "TypeScript", template: "preact-ts" },
+    ],
+  },
+  {
+    name: "Solid",
+    color: chalk.blue,
+    variants: [
+      { name: "JavaScript", template: "solid" },
+      { name: "TypeScript", template: "solid-ts" },
+    ],
+  },
+  {
+    name: "Vanilla",
+    color: chalk.yellow,
+    variants: [
+      { name: "JavaScript", template: "vanilla" },
+      { name: "TypeScript", template: "vanilla-ts" },
+    ],
+  },
+  {
+    name: "Lit",
+    color: chalk.hex("#324FFF"),
+    variants: [
+      { name: "JavaScript", template: "lit" },
+      { name: "TypeScript", template: "lit-ts" },
+    ],
+  },
+];
+
+// CSS file path per framework base name
+const CSS_FILE_MAP = {
+  react: "src/index.css",
+  vue: "src/style.css",
+  svelte: "src/app.css",
+  preact: "src/index.css",
+  solid: "src/index.css",
+  vanilla: "style.css",
+  lit: "src/index.css",
+};
+
 // ---------------- ARGS / DEFAULTS ----------------
 
-// Default project name; Tailwind version can come from CLI or prompt
-// let projectName = "my-app";
 let projectName = null;
 let tailwindVersion = null;
 
@@ -41,8 +113,6 @@ for (let i = 0; i < rawArgs.length; i++) {
   }
 }
 
-
-
 let currentChild = null;
 
 // ---------------- SIMPLE ASK HELPER ----------------
@@ -58,6 +128,77 @@ function ask(question) {
       rl.close();
       resolve(answer.trim());
     });
+  });
+}
+
+// ---------------- INTERACTIVE SELECT (arrow keys) ----------------
+
+function select(question, options) {
+  return new Promise((resolve) => {
+    let selected = 0;
+    let firstRender = true;
+
+    const render = () => {
+      if (!firstRender) {
+        // Move cursor up to overwrite previous render
+        process.stdout.write(`\x1B[${options.length}A`);
+      }
+      firstRender = false;
+
+      options.forEach((opt, i) => {
+        const active = i === selected;
+        const marker = active ? chalk.cyan("❯") : " ";
+        const label = active
+          ? (opt.color || chalk.cyan)(opt.name)
+          : chalk.dim(opt.name);
+        process.stdout.write(`\x1B[2K  ${marker} ${label}\n`);
+      });
+    };
+
+    console.log(chalk.bold.green("?") + " " + chalk.bold(question));
+    process.stdout.write("\x1B[?25l"); // hide cursor
+    render();
+
+    const { stdin } = process;
+    stdin.setRawMode(true);
+    stdin.resume();
+    stdin.setEncoding("utf8");
+
+    const onData = (key) => {
+      if (key === "\x1B[A") {
+        // Up arrow
+        selected = (selected - 1 + options.length) % options.length;
+        render();
+      } else if (key === "\x1B[B") {
+        // Down arrow
+        selected = (selected + 1) % options.length;
+        render();
+      } else if (key === "\r") {
+        // Enter
+        stdin.setRawMode(false);
+        stdin.removeListener("data", onData);
+        stdin.pause();
+        process.stdout.write("\x1B[?25h"); // show cursor
+
+        const chosen = options[selected];
+
+        // Clean up: move to question line, rewrite with answer, clear option lines
+        process.stdout.write(`\x1B[${options.length + 1}A`);
+        process.stdout.write(
+          `\r\x1B[2K${chalk.bold.green("✔")} ${chalk.bold(question)} ${(chosen.color || chalk.cyan)(chosen.name)}\n`,
+        );
+        process.stdout.write("\x1B[J"); // clear from cursor to end
+
+        resolve(chosen);
+      } else if (key === "\x03") {
+        // Ctrl+C
+        process.stdout.write("\x1B[?25h");
+        console.log(chalk.red("\n👋 Exiting..."));
+        process.exit(0);
+      }
+    };
+
+    stdin.on("data", onData);
   });
 }
 
@@ -86,12 +227,12 @@ process.on("SIGINT", () => {
 function runCommand(command, args) {
   return new Promise((resolve, reject) => {
     const isWindows = process.platform === "win32";
-    const cmd = isWindows ? `${command}.cmd` : command;
 
-    const child = spawn(cmd, args, {
+    const child = spawn(command, args, {
       stdio: "inherit",
       env: process.env,
-      detached: process.platform !== "win32",
+      shell: isWindows,
+      detached: !isWindows,
     });
 
     currentChild = child;
@@ -101,6 +242,11 @@ function runCommand(command, args) {
       if (code === 0) resolve();
       else reject(new Error(`${command} failed`));
     });
+
+    child.on("error", (err) => {
+      currentChild = null;
+      reject(err);
+    });
   });
 }
 
@@ -108,14 +254,22 @@ function runCommand(command, args) {
 
 async function main() {
   try {
+    // 1. Project name
     if (!projectName) {
       const answer = await ask(
-        "Project folder name? (press Enter to use current directory name): ",
+        "Project folder name? (press Enter to use current directory): ",
       );
       projectName = answer || ".";
     }
 
-    // If Tailwind version was not provided via CLI, ask the user (like Vite style prompts)
+    // 2. Framework selection (arrow keys)
+    const framework = await select("Select a framework:", FRAMEWORKS);
+
+    // 3. Variant selection (arrow keys)
+    const variant = await select("Select a variant:", framework.variants);
+    const template = variant.template;
+
+    // 4. Tailwind version
     if (!tailwindVersion) {
       const answer = await ask(
         "Tailwind version? (press Enter for latest v4): ",
@@ -129,13 +283,15 @@ async function main() {
       process.exit(1);
     }
 
-    const viteSpinner = ora("⚡ Creating Vite React App...").start();
+    const viteSpinner = ora(
+      `⚡ Creating Vite ${framework.name} App...`,
+    ).start();
 
     const viteArgs = [
       "create-vite@latest",
       projectName,
       "--template",
-      "react",
+      template,
       "--no-interactive",
     ];
 
@@ -162,7 +318,7 @@ async function main() {
       process.exit(1);
     }
 
-    viteSpinner.succeed("Vite React App Created Successfully!");
+    viteSpinner.succeed(`Vite ${framework.name} App Created Successfully!`);
 
     const installSpinner = ora("📦 Installing dependencies...").start();
     await runCommand("npm", ["install", "--no-audit", "--no-fund"]);
@@ -181,18 +337,23 @@ async function main() {
     ]);
     tailwindSpinner.succeed("Tailwind Installed Successfully!");
 
-    configureVite();
-    configureCSS();
+    // Get the framework base name (e.g. "react" from "react-swc-ts")
+    const frameworkBase = framework.name.toLowerCase();
 
-    console.log(chalk.green("\n🚀 Project Ready With Tailwind!"));
+    configureVite();
+    configureCSS(frameworkBase);
+
+    console.log(
+      chalk.green(`\n🚀 ${framework.name} + Tailwind Project Ready!`),
+    );
     console.log(chalk.blue("\nStarting development server..."));
 
-    // Spawn dev server directly without awaiting it (so user can interact with terminal)
+    // Spawn dev server directly without awaiting it
     const isWindows = process.platform === "win32";
-    const cmd = isWindows ? "npm.cmd" : "npm";
 
-    const devProcess = spawn(cmd, ["run", "dev"], {
+    const devProcess = spawn("npm", ["run", "dev"], {
       stdio: "inherit",
+      shell: isWindows,
     });
 
     currentChild = devProcess;
@@ -203,28 +364,56 @@ async function main() {
     }
   }
 }
+
 // ---------------- CONFIGURE VITE ----------------
 
 function configureVite() {
-  const content = `import { defineConfig } from 'vite'
-import tailwindcss from '@tailwindcss/vite'
-import react from '@vitejs/plugin-react'
+  // Find existing config file (could be .js or .ts depending on template)
+  const configFile = fs.existsSync("vite.config.ts")
+    ? "vite.config.ts"
+    : "vite.config.js";
 
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [
-    tailwindcss(),
-    react()
-  ],
-})`;
+  let content = fs.readFileSync(configFile, "utf-8");
 
-  fs.writeFileSync("vite.config.js", content);
+  // Add tailwind import after the last import statement
+  const tailwindImport = `import tailwindcss from '@tailwindcss/vite'`;
+
+  const lines = content.split("\n");
+  let lastImportLine = -1;
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].trimStart().startsWith("import ")) {
+      lastImportLine = i;
+    }
+  }
+
+  if (lastImportLine >= 0) {
+    lines.splice(lastImportLine + 1, 0, tailwindImport);
+  } else {
+    lines.unshift(tailwindImport);
+  }
+  content = lines.join("\n");
+
+  // Add tailwindcss() to the plugins array
+  const pluginsRegex = /plugins:\s*\[/;
+  if (pluginsRegex.test(content)) {
+    content = content.replace(pluginsRegex, "plugins: [\n    tailwindcss(),\n   ");
+  } else if (content.includes("defineConfig({")) {
+    content = content.replace(
+      "defineConfig({",
+      "defineConfig({\n  plugins: [tailwindcss()],",
+    );
+  }
+
+  fs.writeFileSync(configFile, content);
 }
 
 // ---------------- CONFIGURE CSS ----------------
 
-function configureCSS() {
-  fs.writeFileSync("src/index.css", `@import "tailwindcss";`);
+function configureCSS(frameworkBase) {
+  const cssFile = CSS_FILE_MAP[frameworkBase] || "src/index.css";
+
+  // Clear existing CSS and set only Tailwind import
+  fs.writeFileSync(cssFile, `@import "tailwindcss";\n`);
 }
 
 main();

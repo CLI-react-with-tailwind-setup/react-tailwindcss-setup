@@ -1,4 +1,4 @@
-console.log(`
+process.stderr.write(`
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ⚠  This package is a CLI tool.

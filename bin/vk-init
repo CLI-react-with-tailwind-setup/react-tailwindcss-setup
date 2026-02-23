@@ -350,10 +350,10 @@ async function main() {
 
     // Spawn dev server directly without awaiting it
     const isWindows = process.platform === "win32";
-    const cmd = isWindows ? "npm.cmd" : "npm";
 
-    const devProcess = spawn(cmd, ["run", "dev"], {
+    const devProcess = spawn("npm", ["run", "dev"], {
       stdio: "inherit",
+      shell: isWindows,
     });
 
     currentChild = devProcess;

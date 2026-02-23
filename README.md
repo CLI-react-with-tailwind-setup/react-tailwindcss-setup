@@ -1,19 +1,19 @@
 # create-crt
 
-![create-crt](image/img.png)
+![create-crt](https://raw.githubusercontent.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup/main/image/img.png)
 ## CLI Preview
 
-![Preview 1](image/sample1.png)
+![Preview 1](https://raw.githubusercontent.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup/main/image/sample1.png)
 
-![Preview 2](image/sample2.png)
+![Preview 2](https://raw.githubusercontent.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup/main/image/sample2.png)
 
-![Preview 3](image/sample3.png)
+![Preview 3](https://raw.githubusercontent.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup/main/image/sample3.png)
 
-![Preview 4](image/sample4.png)
+![Preview 4](https://raw.githubusercontent.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup/main/image/sample4.png)
 
-![Preview 5](image/sample5.png)
+![Preview 5](https://raw.githubusercontent.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup/main/image/sample5.png)
 
-![Preview 6](image/sample6.png)
+![Preview 6](https://raw.githubusercontent.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup/main/image/sample6.png)
 
 > **One command to scaffold a production-ready React + Tailwind CSS project — no manual config needed.**
 

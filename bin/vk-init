@@ -412,18 +412,8 @@ function configureVite() {
 function configureCSS(frameworkBase) {
   const cssFile = CSS_FILE_MAP[frameworkBase] || "src/index.css";
 
-  if (fs.existsSync(cssFile)) {
-    // Prepend @import "tailwindcss" to existing CSS file
-    const existing = fs.readFileSync(cssFile, "utf-8");
-    fs.writeFileSync(cssFile, `@import "tailwindcss";\n${existing}`);
-  } else {
-    // Create the CSS file if it doesn't exist
-    const dir = cssFile.includes("/")
-      ? cssFile.split("/").slice(0, -1).join("/")
-      : ".";
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(cssFile, `@import "tailwindcss";\n`);
-  }
+  // Clear existing CSS and set only Tailwind import
+  fs.writeFileSync(cssFile, `@import "tailwindcss";\n`);
 }
 
 main();

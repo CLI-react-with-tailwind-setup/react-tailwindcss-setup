@@ -1,15 +1,45 @@
 {
-  "name": "react-tailwind-v1",
+  "Quick start":"npx create-crt my-app",
+  "name": "create-crt",
   "version": "1.0.0",
   "type": "module",
+  "description": "CLI tool to scaffold Vite + React + Tailwind projects. Run with: npx create-crt (my-app is you app name put here)",
   "bin": {
-    "react-tailwind-v1": "./bin/vk-init"
+    "create-crt": "./bin/vk-init"
   },
-  "scripts": {},
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "CLI tool to scaffold React projects",
+  "scripts": {
+    "postinstall": "node postinstall.js"
+  },
+  "keywords": [
+    "create-crt",
+    "cli",
+    "react",
+    "tailwind",
+    "vite",
+    "react-cli",
+    "tailwind-cli",
+    "tailwindcss",
+    "react-tailwind",
+    "react-tailwindcss",
+    "boilerplate",
+    "generator",
+    "setup",
+    "starter-template",
+    "create-react-tailwind"
+  ],
+  "author": {
+    "name": "Vishal Kumar",
+    "url": "https://www.linkedin.com/in/vishal-kumar-46b05b258"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup/issues"
+  },
+  "homepage": "https://github.com/CLI-react-with-tailwind-setup/react-tailwindcss-setup#readme",
   "dependencies": {
     "chalk": "^5.6.2",
     "ora": "^9.3.0"

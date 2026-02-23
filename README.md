@@ -1,6 +1,6 @@
 # create-crt
 
-![create-crt](image/info.png)
+![create-crt](image/img.png)
 ## CLI Preview
 
 ![Preview 1](https://drive.google.com/uc?export=view&id=1QAa5WsZyRNEktkzDeXn2UVeyuJnQI4yK)

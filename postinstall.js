@@ -5,11 +5,13 @@ process.stderr.write(`
 
 Do NOT install it using:
 
-npm install create-react-crt
+   npm install create-react-crt
 
-Instead run:
+Instead, run directly:
 
-npx create-react-crt my-app
+   npx create-react-crt my-app
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-`);
+\n`);
+
+process.exit(1);

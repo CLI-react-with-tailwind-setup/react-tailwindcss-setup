@@ -1,7 +1,7 @@
 {
   "Quick start": "npx create-crt my-app",
   "name": "create-crt",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "description": "CLI tool to scaffold Vite + React + Tailwind projects. Run with: npx create-crt (my-app is you app name put here)",
   "bin": {

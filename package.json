@@ -1,19 +1,31 @@
 {
-  "name": "create-r-tailwind",
+  "Quick start":"npx create-crt my-app",
+  "name": "create-crt",
   "version": "1.0.0",
   "type": "module",
-  "description": "CLI tool to scaffold Vite + React + Tailwind projects. Run with: npx create-r-tailwind my-app",
+  "description": "CLI tool to scaffold Vite + React + Tailwind projects. Run with: npx create-crt (my-app is you app name put here)",
   "bin": {
-    "create-r-tailwind": "./bin/vk-init"
+    "create-crt": "./bin/vk-init"
+  },
+  "scripts": {
+    "postinstall": "node postinstall.js"
   },
   "keywords": [
+    "create-crt",
     "cli",
     "react",
     "tailwind",
     "vite",
-    "scaffold",
     "react-cli",
-    "tailwind-cli"
+    "tailwind-cli",
+    "tailwindcss",
+    "react-tailwind",
+    "react-tailwindcss",
+    "boilerplate",
+    "generator",
+    "setup",
+    "starter-template",
+    "create-react-tailwind"
   ],
   "author": {
     "name": "Vishal Kumar",

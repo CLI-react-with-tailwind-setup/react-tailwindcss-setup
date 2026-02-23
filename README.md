@@ -1,6 +1,19 @@
-# react-tailwind-v1
+# create-crt
 
-![react-tailwind-v1](image/info.png)
+![create-crt](image/info.png)
+## CLI Preview
+
+![Preview 1](https://drive.google.com/uc?export=view&id=1QAa5WsZyRNEktkzDeXn2UVeyuJnQI4yK)
+
+![Preview 2](https://drive.google.com/uc?export=view&id=1c_5addMp38e-4Konff168HZPdeg9TBK2)
+
+![Preview 3](https://drive.google.com/uc?export=view&id=1hBpXNcoHVshfGut0VriusWtPNncq7LWq)
+
+![Preview 4](https://drive.google.com/uc?export=view&id=1xoQ36Zel4vzOKb0wd4Q1gBoERJIa0pBW)
+
+![Preview 5](https://drive.google.com/uc?export=view&id=10oYoGbhxzUM1ZzZiRF80kK2M5yCRNSPt)
+
+![Preview 6](https://drive.google.com/uc?export=view&id=1190Qs8zeQhyvusO1VeSW3hizk3qIQ4jc)
 
 > **One command to scaffold a production-ready React + Tailwind CSS project — no manual config needed.**
 
@@ -17,7 +30,7 @@ Every time you start a new frontend project the drill is the same:
 
 It's tedious, repetitive, and easy to mess up.
 
-**`react-tailwind-v1` does all of this in a single command.** It creates the Vite + React app, installs Tailwind CSS, wires up the config files, and even starts the dev server — so you go from zero to coding in seconds.
+**`create-crt` does all of this in a single command.** It creates the Vite + React app, installs Tailwind CSS, wires up the config files, and even starts the dev server — so you go from zero to coding in seconds.
 
 ---
 
@@ -39,15 +52,15 @@ It's tedious, repetitive, and easy to mess up.
 ### Global install (recommended)
 
 ```bash
-npm install -g react-tailwind-v1
+npm install -g create-crt
 ```
 
-Once installed globally, you can use the `react-tailwind-v1` command from anywhere.
+Once installed globally, you can use the `create-crt` command from anywhere.
 
 ### Run without installing (via npx)
 
 ```bash
-npx react-tailwind-v1 my-app
+npx create-crt my-app
 ```
 
 ---
@@ -57,7 +70,7 @@ npx react-tailwind-v1 my-app
 ### Basic — create a new project
 
 ```bash
-react-tailwind-v1 my-app
+create-crt my-app
 ```
 
 This will:
@@ -70,7 +83,7 @@ This will:
 ### Scaffold in the current directory
 
 ```bash
-react-tailwind-v1 .
+create-crt .
 ```
 
 Use `.` to set up the project in your current directory instead of creating a new folder.
@@ -79,10 +92,10 @@ Use `.` to set up the project in your current directory instead of creating a ne
 
 ```bash
 # Using = syntax
-react-tailwind-v1 my-app --tailwind-version=3
+create-crt my-app --tailwind-version=3
 
 # Using space syntax
-react-tailwind-v1 my-app --tailwind-version 3.4.17
+create-crt my-app --tailwind-version 3.4.17
 ```
 
 If you don't pass `--tailwind-version`, the CLI will prompt you to enter one. Press **Enter** to use the default (latest v4).
@@ -92,7 +105,7 @@ If you don't pass `--tailwind-version`, the CLI will prompt you to enter one. Pr
 ## 🛠️ Example Walkthrough
 
 ```
-$ react-tailwind-v1 my-portfolio
+$ create-crt my-portfolio
 
 Tailwind version? (press Enter for latest v4): 
 

@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-
 import chalk from "chalk";
 import { spawn } from "child_process";
 import fs from "fs";
@@ -10,7 +9,8 @@ import ora from "ora";
 // ---------------- ARGS / DEFAULTS ----------------
 
 // Default project name; Tailwind version can come from CLI or prompt
-let projectName = "my-app";
+// let projectName = "my-app";
+let projectName = null;
 let tailwindVersion = null;
 
 const rawArgs = process.argv.slice(2);
@@ -35,16 +35,13 @@ for (let i = 0; i < rawArgs.length; i++) {
     continue;
   }
 
-  // First non-option arg is project name (including ".")
-  if (!arg.startsWith("-") && projectName === "my-app") {
+  if (!arg.startsWith("-") && !projectName) {
     projectName = arg;
     continue;
   }
 }
 
-if (!projectName) {
-  projectName = "my-app";
-}
+
 
 let currentChild = null;
 
@@ -54,7 +51,7 @@ function ask(question) {
   return new Promise((resolve) => {
     const rl = readline.createInterface({
       input: process.stdin,
-      output: process.stdout
+      output: process.stdout,
     });
 
     rl.question(question, (answer) => {
@@ -94,7 +91,7 @@ function runCommand(command, args) {
     const child = spawn(cmd, args, {
       stdio: "inherit",
       env: process.env,
-      detached: process.platform !== "win32"
+      detached: process.platform !== "win32",
     });
 
     currentChild = child;
@@ -111,39 +108,76 @@ function runCommand(command, args) {
 
 async function main() {
   try {
+    if (!projectName) {
+      const answer = await ask(
+        "Project folder name? (press Enter to use current directory name): ",
+      );
+      projectName = answer || ".";
+    }
+
     // If Tailwind version was not provided via CLI, ask the user (like Vite style prompts)
     if (!tailwindVersion) {
-      const answer = await ask("Tailwind version? (press Enter for latest v4): ");
+      const answer = await ask(
+        "Tailwind version? (press Enter for latest v4): ",
+      );
       tailwindVersion = answer || "4";
+    }
+
+    // Only block if creating a new folder that already exists
+    if (projectName !== "." && fs.existsSync(projectName)) {
+      console.log(chalk.red(`\n❌ Folder "${projectName}" already exists.`));
+      process.exit(1);
     }
 
     const viteSpinner = ora("⚡ Creating Vite React App...").start();
 
-    await runCommand("npx", [
+    const viteArgs = [
       "create-vite@latest",
       projectName,
       "--template",
       "react",
-      "--no-interactive"
-    ]);
-    viteSpinner.succeed("Vite React App Created Successfully!")
+      "--no-interactive",
+    ];
+
+    // When scaffolding into the current directory, Vite silently cancels
+    // if the directory is not empty unless --overwrite is passed.
+    if (projectName === ".") {
+      viteArgs.push("--overwrite");
+    }
+
+    await runCommand("npx", viteArgs);
+
     if (projectName !== ".") {
       process.chdir(projectName);
     }
 
+    // Verify that create-vite actually scaffolded the project
+    if (!fs.existsSync("package.json")) {
+      viteSpinner.fail("Vite scaffolding failed — package.json not found.");
+      console.log(
+        chalk.red(
+          "The project was not created. Make sure the target directory is valid.",
+        ),
+      );
+      process.exit(1);
+    }
+
+    viteSpinner.succeed("Vite React App Created Successfully!");
+
     const installSpinner = ora("📦 Installing dependencies...").start();
-    await runCommand("npm", ["install"]);
+    await runCommand("npm", ["install", "--no-audit", "--no-fund"]);
     installSpinner.succeed("Dependencies Installed Successfully!");
 
-   
-      const tailwindSpinner = ora(
-        `🎨 Installing Tailwind (tailwindcss@${tailwindVersion}, @tailwindcss/vite@${tailwindVersion})...`
-      ).start();
-  
+    const tailwindSpinner = ora(
+      `🎨 Installing Tailwind (tailwindcss@${tailwindVersion}, @tailwindcss/vite@${tailwindVersion})...`,
+    ).start();
+
     await runCommand("npm", [
       "install",
+      "--no-audit",
+      "--no-fund",
       `tailwindcss@${tailwindVersion}`,
-      `@tailwindcss/vite@${tailwindVersion}`
+      `@tailwindcss/vite@${tailwindVersion}`,
     ]);
     tailwindSpinner.succeed("Tailwind Installed Successfully!");
 
@@ -152,23 +186,22 @@ async function main() {
 
     console.log(chalk.green("\n🚀 Project Ready With Tailwind!"));
     console.log(chalk.blue("\nStarting development server..."));
-    
+
     // Spawn dev server directly without awaiting it (so user can interact with terminal)
     const isWindows = process.platform === "win32";
     const cmd = isWindows ? "npm.cmd" : "npm";
-    
+
     const devProcess = spawn(cmd, ["run", "dev"], {
       stdio: "inherit",
     });
 
     currentChild = devProcess;
-
   } catch (err) {
     console.log(chalk.red("\n❌ Setup failed or interrupted."));
-  if (err?.message) {
-    console.log(chalk.red(err.message));
+    if (err?.message) {
+      console.log(chalk.red(err.message));
+    }
   }
-}
 }
 // ---------------- CONFIGURE VITE ----------------
 
@@ -183,7 +216,7 @@ export default defineConfig({
     tailwindcss(),
     react()
   ],
-})`
+})`;
 
   fs.writeFileSync("vite.config.js", content);
 }
